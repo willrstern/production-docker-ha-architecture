@@ -1,0 +1,12 @@
+[Unit]
+Description=someapp-lb
+After=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill someapp-lb
+ExecStartPre=-/usr/bin/docker rm someapp-lb
+ExecStartPre=/usr/bin/docker pull willrstern/nginx-lb
+ExecStart=/usr/bin/sh -c "/usr/bin/docker run -e SERVICE_NAME=someapp -e ETCD=\"$(ifconfig docker0 | awk '/\<inet\>/ { print $2}'):2379\" -P --name someapp-lb willrstern/nginx-lb"
+ExecStartPost=/usr/bin/sh -c "sleep 3 && curl -X PUT 159.203.110.244:2379/v2/keys/subdomains/someapp -d value=$(/usr/bin/ip route|grep 'eth0.\+src' | head -1 | grep -o '[0-9\.]\+\s\+$' | grep -o '[0-9\.]\+'):$(/usr/bin/docker ps | grep 'someapp-lb' | grep -o '[0-9]\+->' | grep -o '[0-9]\+')"
+ExecStop=/usr/bin/docker stop someapp-lb

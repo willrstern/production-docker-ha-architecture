@@ -1,0 +1,9 @@
+{{range gets "/subdomains/*"}}
+    server {
+      server_name {{base .Key}}.mysite.com;
+      location / {
+        proxy_pass http://{{.Value}};
+        proxy_redirect    off;
+      }
+    }
+{{end}}

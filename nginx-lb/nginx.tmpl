@@ -1,0 +1,17 @@
+upstream app {
+{{range getvs "/services/appname/upstream/*"}}
+    server {{.}};
+{{end}}
+}
+
+server {
+    listen 80;
+    access_log /var/log/nginx/appname.access.log;
+    error_log /var/log/nginx/appname.log;
+
+    location / {
+        proxy_pass        http://app;
+        proxy_redirect    off;
+        proxy_set_header  Host $host;
+    }
+}
