@@ -1,4 +1,4 @@
-# Running a Production High Availability Service on CoreOS using Docker, Fleet, Flannel, Etcd, Confd & Nginx
+# Running a Production High Availability Docker Services on CoreOS using Fleet, Flannel, Etcd, Confd & Nginx
 
 - View the diagram of what's going on: https://drive.google.com/file/d/0B74l6vUHf9HrMzNrYUlyMm40RWs/view?usp=sharing
 
