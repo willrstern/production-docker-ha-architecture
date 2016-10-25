@@ -6,6 +6,6 @@ After=docker.service
 TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill someapp%i
 ExecStartPre=-/usr/bin/docker rm someapp%i
-ExecStartPre=/usr/bin/docker pull willrstern/node-sample
-ExecStart=/usr/bin/docker run -e APPNAME=someapp%i --name someapp%i -P willrstern/node-sample
+ExecStartPre=/usr/bin/docker pull willrstern/sample-node
+ExecStart=/usr/bin/docker run -e APPNAME=someapp%i --name someapp%i -P willrstern/sample-node
 ExecStop=/usr/bin/docker kill someapp%i
